@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+'''using the minimax algo. find the best possible move to make.
+Minimax finds the best possible moves by applying a set of rules.
+A win = 1, tie = 0, loss = -1 (for us). Assuming that each player chooses the best move
+(we choose 1 if possible, opponent chooses -1). Starting at the top of a 'game tree',
+generate the possible moves we can make. If It reaches a terminal state, stop. Otherwise keep searching in depth.
+We find max.
+'''
