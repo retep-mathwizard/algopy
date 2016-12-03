@@ -6,3 +6,13 @@ A win = 1, tie = 0, loss = -1 (for us). Assuming that each player chooses the be
 generate the possible moves we can make. If It reaches a terminal state, stop. Otherwise keep searching in depth.
 We find max.
 '''
+class TicTacToe:
+    def __init__(self):
+        self.board = [0,1,2,3,4,5,6,7,8]
+        self.winning_combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,8]]
+    def is_gameover(self, state, winning_combos):
+        for combo in winning_combos:
+            if (combo[0] == 'X' and combo[1] == 'X' and combo[2] == 'X') or (combo[0] == 'O' and combo[1] == 'O' and combo[2] == 'O'):
+                return True
+        return False
+        
