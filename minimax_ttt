@@ -6,13 +6,38 @@ A win = 1, tie = 0, loss = -1 (for us). Assuming that each player chooses the be
 generate the possible moves we can make. If It reaches a terminal state, stop. Otherwise keep searching in depth.
 We find max.
 '''
-class TicTacToe:
-    def __init__(self):
-        self.board = [0,1,2,3,4,5,6,7,8]
+#[0,1,2,3,4,5,6,7,8]
+class GameState:
+    def __init__(self,board):
         self.winning_combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,8]]
-    def is_gameover(self, state, winning_combos):
-        for combo in winning_combos:
-            if (combo[0] == 'X' and combo[1] == 'X' and combo[2] == 'X') or (combo[0] == 'O' and combo[1] == 'O' and combo[2] == 'O'):
+    def is_gameover(self):
+        for combo in self.winning_combos:
+            if (board[combo[0]] == 'X' and board[combo[1]] == 'X' and board[combo[2]] == 'X') or 
+            (board[combo[0]] == 'O' and board[combo[1]] == 'O' and board[combo[2]] == 'O'):
                 return True
         return False
-        
+    def get_possible_moves(self):
+        squares = []
+        for square in self.board:
+            if square != 'X' and square != 'O':
+                squares.append(square)
+        return squares
+    def get_next_state(self, move, who):
+        copy = self.board
+        if who == 'X':
+            copy[move] = 'X'
+        else:
+            copy[move] = '0'
+        return GameState(copy)
+
+def eval(game_state):
+    for combo in [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,8]:
+        if board[0] == 'X' and board[1] == 'X' and board[2] == 'X':
+            return 1    
+        elif board[0] == 'O' and board[1] == 'O' and board[2] == 'O':
+            return -1
+        else:
+            return 0
+
+
+
