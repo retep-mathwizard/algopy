@@ -14,6 +14,8 @@ class GameState:
         self.board = board
         self.winning_combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,8]]
     def is_gameover(self):
+        if self.board.count('X') + self.board.count('O') == 9:
+            return True
         for combo in self.winning_combos:
             if (self.board[combo[0]] == 'X' and self.board[combo[1]] == 'X' and self.board[combo[2]] == 'X') or (self.board[combo[0]] == 'O' and self.board[combo[1]] == 'O' and self.board[combo[2]] == 'O'):
                 return True
@@ -24,7 +26,7 @@ class GameState:
             if square != 'X' and square != 'O':
                 squares.append(int(square))
         return squares
-    def get_next_state(self):
+    def get_next_state(self, move):
         copy = self.board
         num_of_x = copy.count('X')
         num_of_o = copy.count('O')
@@ -32,7 +34,7 @@ class GameState:
         #o starts, x's turn 1 < 0 x's turn
         #x starts, x's turn 1 > 1 
         #o starts, o's turn 1 < 1
-        if (x_went_first and num_of_x > num_of_o) or (x_went_first is not True and num_of_o == num_of_x):
+        if (self.x_went_first and num_of_x > num_of_o) or (self.x_went_first is not True and num_of_o == num_of_x):
             copy[move] = 'O'
         else:
             copy[move] = 'X'
@@ -54,8 +56,8 @@ def min_play(game_state):
         return evals(game_state)
     moves = game_state.get_possible_moves()
     best_move = moves[0]
-    best_score = 1
-    for move in moves: 
+    best_score = 2 #not possible
+    for move in moves:
         clone = game_state.get_next_state(move)
         score = max_play(clone)
         if score < best_score:
@@ -67,7 +69,7 @@ def max_play(game_state):
     if game_state.is_gameover():
         return evals(game_state)
     moves = game_state.get_possible_moves()
-    best_score = -1
+    best_score = -2 #not possible
     for move in moves:
         clone = game_state.get_next_state(move)
         score = min_play(clone)
@@ -79,7 +81,7 @@ def max_play(game_state):
 def minimax(game_state):
     moves = game_state.get_possible_moves()
     best_move = moves[0]
-    best_score = -1
+    best_score = -2
     for move in moves:
         clone = game_state.get_next_state(move)
         score = min_play(clone)
@@ -89,5 +91,8 @@ def minimax(game_state):
     return best_move
 
 
-game = GameState(['X',1,2,3,'O',5,'O',7,8])
+game = GameState(['X',1,2,
+                    3,'O',5,
+                    6,7,8])
 print(minimax(game))
+
