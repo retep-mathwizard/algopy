@@ -8,6 +8,8 @@ We find max.
 '''
 #[0,1,2,3,4,5,6,7,8]
 class GameState:
+    #http://stackoverflow.com/questions/1537202/variables-inside-and-outside-of-a-class-init-function
+    x_went_first = False
     def __init__(self,board):
         self.board = board
         self.winning_combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,8]]
@@ -22,13 +24,18 @@ class GameState:
             if square != 'X' and square != 'O':
                 squares.append(int(square))
         return squares
-    def get_next_state(self, move):
-        num_of_x = 
+    def get_next_state(self):
         copy = self.board
-        if who == 'X':
-            copy[move] = 'X'
+        num_of_x = copy.count('X')
+        num_of_o = copy.count('O')
+        #x starts, o's turn 1 > 0 o's turn
+        #o starts, x's turn 1 < 0 x's turn
+        #x starts, x's turn 1 > 1 
+        #o starts, o's turn 1 < 1
+        if (x_went_first and num_of_x > num_of_o) or (x_went_first is not True and num_of_o == num_of_x):
+            copy[move] = 'O'
         else:
-            copy[move] = '0'
+            copy[move] = 'X'
         return GameState(copy)
 
 def evals(game_state):
@@ -49,7 +56,7 @@ def min_play(game_state):
     best_move = moves[0]
     best_score = 1
     for move in moves: 
-        clone = game_state.get_next_state(move,'0')
+        clone = game_state.get_next_state(move)
         score = max_play(clone)
         if score < best_score:
             best_move = move
@@ -62,7 +69,7 @@ def max_play(game_state):
     moves = game_state.get_possible_moves()
     best_score = -1
     for move in moves:
-        clone = game_state.get_next_state(move,'X')
+        clone = game_state.get_next_state(move)
         score = min_play(clone)
         if score > best_score:
             best_move = move
@@ -74,12 +81,13 @@ def minimax(game_state):
     best_move = moves[0]
     best_score = -1
     for move in moves:
-        clone = game_state.get_next_state(move, 'X')
+        clone = game_state.get_next_state(move)
         score = min_play(clone)
         if score > best_score:
             best_move = move
             best_score = score
     return best_move
+
 
 game = GameState(['X',1,2,3,'0',5,'0',7,8])
 print(minimax(game))
