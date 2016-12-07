@@ -1,17 +1,9 @@
 #!/usr/bin/env python3
-'''using the minimax algo. find the best possible move to make.
-Minimax finds the best possible moves by applying a set of rules.
-A win = 1, tie = 0, loss = -1 (for us). Assuming that each player chooses the best move
-(we choose 1 if possible, opponent chooses -1). Starting at the top of a 'game tree',
-generate the possible moves we can make. If It reaches a terminal state, stop. Otherwise keep searching in depth.
-We find max.
-'''
 #[0,1,2,3,4,5,6,7,8]
 class GameState:
-    #http://stackoverflow.com/questions/1537202/variables-inside-and-outside-of-a-class-init-function
-    x_went_first = True
     def __init__(self,board):
         self.board = board
+        self.character = 'X'
         self.winning_combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,8]]
     def is_gameover(self):
         if self.board.count('X') + self.board.count('O') == 9:
@@ -26,57 +18,35 @@ class GameState:
             if square != 'X' and square != 'O':
                 squares.append(int(square))
         return squares
-    def get_next_state(self, move):
-        copy = self.board
-        num_of_x = copy.count('X')
-        num_of_o = copy.count('O')
-        #x starts, o's turn 1 > 0 o's turn
-        #o starts, x's turn 1 < 0 x's turn
-        #x starts, x's turn 1 > 1 
-        #o starts, o's turn 1 < 1
-        if (self.x_went_first and num_of_x > num_of_o) or (self.x_went_first is not True and num_of_o == num_of_x):
-            copy[move] = 'O'
-        else:
+    def get_next_state(self, move, computer_turn):
+        copy = list(self.board)
+        if computer_turn:
             copy[move] = 'X'
+        else:
+            copy[move] = 'O'
         return GameState(copy)
 
 def evals(game_state):
     for combo in [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,8]]:
         if game_state.board[combo[0]] == 'X' and game_state.board[combo[1]] == 'X' and game_state.board[combo[2]] == 'X':
+            print('WIN',game_state.board)
             return 1    
         elif game_state.board[combo[0]] == 'O' and game_state.board[combo[1]] == 'O' and game_state.board[combo[2]] == 'O':
+            print('LOSS',game_state.board)
             return -1
         else:
             return 0
 
-
-
-def min_play(game_state):
+#http://giocc.com/concise-implementation-of-minimax-through-higher-order-functions.html
+def max_play(game_state):
     if game_state.is_gameover():
         return evals(game_state)
-    moves = game_state.get_possible_moves()
-    best_move = None
-    best_score = 2 #not possible
-    for move in moves:
-        clone = game_state.get_next_state(move)
-        score = max_play(clone)
-        if score < best_score:
-            best_move = move
-            best_score = score
-    return best_score
-
-def max_play(game_state):
-    game_state.is_gameover():
+    return max(map(lambda move: min_play(game_state.next_state(move, True)), game_state.get_possible_moves())
+def min_play(game_state):
+    #http://stackoverflow.com/questions/890128/why-are-python-lambdas-useful
+    if game_state.is_gameover():
         return evals(game_state)
-    moves = game_state.get_possible_moves()
-    best_score = -2 #not possible
-    for move in moves:
-        clone = game_state.get_next_state(move)
-        score = min_play(clone)
-        if score > best_score:
-            best_move = move
-            best_score = score
-    return best_score
+    return min(map(lambda move: max_play(game_state.next_state(move, False)), game_state.get_possible_moves())
 
 def minimax(game_state):
     moves = game_state.get_possible_moves()
@@ -84,15 +54,18 @@ def minimax(game_state):
     best_move = None
     best_score = -2
     for move in moves:
-        clone = game_state.get_next_state(move)
+        clone = game_state.get_next_state(move, True)
         score = min_play(clone)
-        print('score for move:',move,'is',score)
         if score > best_score:
             best_move = move
             best_score = score
-    return best_move
+    return ['best move'+str(best_move), 'best score'+str(best_score)]
 
-
-game = GameState(['O',1,2,3,'X',5,6,7,8])
+'''
+tests:
+X _ _
+O _ _
+X _ _
+'''
+game = GameState(['X','X','O','O',4,5,'X',7,8])
 print(minimax(game))
-
