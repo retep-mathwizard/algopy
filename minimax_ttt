@@ -41,12 +41,12 @@ def evals(game_state):
 def max_play(game_state):
     if game_state.is_gameover():
         return evals(game_state)
-    return max(map(lambda move: min_play(game_state.next_state(move, True)), game_state.get_possible_moves())
+    return max(map(lambda move: min_play(game_state.get_next_state(move, True)), game_state.get_possible_moves()))
 def min_play(game_state):
     #http://stackoverflow.com/questions/890128/why-are-python-lambdas-useful
     if game_state.is_gameover():
         return evals(game_state)
-    return min(map(lambda move: max_play(game_state.next_state(move, False)), game_state.get_possible_moves())
+    return min(map(lambda move: max_play(game_state.get_next_state(move, False)), game_state.get_possible_moves()))
 
 def minimax(game_state):
     moves = game_state.get_possible_moves()
