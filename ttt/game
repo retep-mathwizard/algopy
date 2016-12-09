@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+start_board = ['_'] * 9
+'''Interpreting and printing start board'''
+human_char = input('Pick your character > ')
+if len(human_char) == 1 or human_char == '' or human_char == ' ' or human_char == '_':
+    exit()
+elif human_char == 'X'
+    ai_char = 'O'
+else:
+    ai_char = 'X'
+player_goes_first = random.randint(0,1)
+    
+game = GameState(start_board,char=ai_char, oppchar=human_char)
+while game.is_gameover() is not True:
+    if player_goes_first:
+        game.pretty_print()
+        p_move = int(input(' > '))
+        game.next_state(p_move, False)
+        ai_move, score = minimax(game)
+        game.next_state(ai_move, True)
+print(game.
+
+
