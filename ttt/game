@@ -1,23 +1,49 @@
 #!/usr/bin/env python3
+import random
+from time import sleep
+import minimax as mm
+
+def take_turn(game):
+    while True:
+        p_move = int(input('Your move (1-9) > ')) - 1
+        if p_move > -1 and p_move < 9:
+            if game.board[p_move] == '_':
+                break
+    return p_move
+
+def run_game(game, player_goes_first):
+    if player_goes_first:
+        while True:
+            game.pretty_print()
+            p_move = take_turn(game)
+            game = game.get_next_state(p_move, False)
+            if game.is_gameover(): break
+            ai_move, score = mm.minimax(game)
+            game = game.get_next_state(ai_move, True)
+            if game.is_gameover(): break
+    else:
+        while True:
+            ai_move, score = mm.minimax(game)
+            game = game.get_next_state(ai_move, True)
+            if game.is_gameover(): break
+            game.pretty_print()
+            p_move = take_turn(game)
+            game = game.get_next_state(p_move, False)
+            if game.is_gameover(): break
+    print('The computer ' + game.return_state(score))
+
 start_board = ['_'] * 9
 '''Interpreting and printing start board'''
-human_char = input('Pick your character > ')
-if len(human_char) == 1 or human_char == '' or human_char == ' ' or human_char == '_':
+human_char = input('Pick your symbol > ')
+if len(human_char) > 1 or human_char == '' or human_char == ' ' or human_char == '_':
     exit()
-elif human_char == 'X'
+elif human_char == 'X' or human_char == 'x':
     ai_char = 'O'
 else:
     ai_char = 'X'
-player_goes_first = random.randint(0,1)
+player_goes_first = bool(random.randint(0,2))
     
-game = GameState(start_board,char=ai_char, oppchar=human_char)
-while game.is_gameover() is not True:
-    if player_goes_first:
-        game.pretty_print()
-        p_move = int(input(' > '))
-        game.next_state(p_move, False)
-        ai_move, score = minimax(game)
-        game.next_state(ai_move, True)
-print(game.
-
+input('You go first:' + str(player_goes_first) + '\nenter to continue\n')
+game = mm.GameState(start_board,char=ai_char, oppchar=human_char)
+run_game(game, player_goes_first)
 

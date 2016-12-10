@@ -21,11 +21,11 @@ class GameState:
     @staticmethod
     def return_state(score):
         if score == 0:
-            return('TIE')
+            return('TIED')
         elif score == 1:
-            return('WIN')
+            return('WON')
         elif score == -1:
-            return('LOSS')
+            return('LOST')
         else:
             return('ERROR')
 
@@ -81,4 +81,4 @@ def min_play(game_state):
 def minimax(game_state):
     '''returns the max of mapping the (move, score) tuple to the possible move using [1] of the tuple the (score)'''
     return max(map(lambda move: (move, min_play(game_state.get_next_state(move, True))), game_state.get_possible_moves()), key = lambda x: x[1])
-
+print(minimax(GameState(['X','_','_','_','O','_','_','_','_'])))
