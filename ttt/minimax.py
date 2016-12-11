@@ -52,17 +52,13 @@ class GameState:
             copy[move] = self.oppchar
         return GameState(copy, char=self.char, oppchar=self.oppchar)
 
-def evals(game_state):
-    '''Named evals instead of eval to respect the eval function. http://stackoverflow.com/questions/9383740/what-does-pythons-eval-do'''
-    '''score a game_state from the computers point of view, 1 = win, 0 = tie, -1 = lose'''
-    for combo in game_state.winning_combos:
-        if game_state.board[combo[0]] == game_state.char and \
-        game_state.board[combo[1]] == game_state.char and game_state.board[combo[2]] == game_state.char:
-            return 1    
-        elif game_state.board[combo[0]] == game_state.oppchar and \
-        game_state.board[combo[1]] == game_state.oppchar and game_state.board[combo[2]] == game_state.oppchar:
-            return -1
-    else:
+    def evals(self):
+        '''score a game_state from the computers point of view, 1 = win, 0 = tie, -1 = lose'''
+        for combo in self.winning_combos:
+            if self.board[combo[0]] == self.char and self.board[combo[1]] == self.char and self.board[combo[2]] == self.char:
+                return 1    
+            elif self.board[combo[0]] == self.oppchar and self.board[combo[1]] == self.oppchar and self.board[combo[2]] == self.oppchar:
+                return -1
         return 0
 
 '''max and min will call on each other recusively, until a terminal state'''
