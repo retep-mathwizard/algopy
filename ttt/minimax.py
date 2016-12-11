@@ -52,7 +52,7 @@ class GameState:
             copy[move] = self.oppchar
         return GameState(copy, char=self.char, oppchar=self.oppchar)
 
-    def evals(self):
+    def score(self):
         '''score a game_state from the computers point of view, 1 = win, 0 = tie, -1 = lose'''
         for combo in self.winning_combos:
             if self.board[combo[0]] == self.char and self.board[combo[1]] == self.char and self.board[combo[2]] == self.char:
@@ -65,16 +65,15 @@ class GameState:
 def max_play(game_state):
     '''if the game is over returns score, otherwise calls min_play on it's childen (possible moves from the state) and returns the maximum'''
     if game_state.is_gameover():
-        return evals(game_state)
+        return game_state.score()
     return max(map(lambda move: min_play(game_state.get_next_state(move, True)), game_state.get_possible_moves()))
 
 def min_play(game_state):
     '''if the game is over returns score, otherwise calls max_play on it's childen (possible moves from the state) and returns the minimum'''
     if game_state.is_gameover():
-        return evals(game_state)
+        return game_state.score()
     return min(map(lambda move: max_play(game_state.get_next_state(move, False)), game_state.get_possible_moves()))
 
 def minimax(game_state):
     '''returns the max of mapping the (move, score) tuple to the possible move using [1] of the tuple the (score)'''
     return max(map(lambda move: (move, min_play(game_state.get_next_state(move, True))), game_state.get_possible_moves()), key = lambda x: x[1])
-print(minimax(GameState(['X','_','_','_','O','_','_','_','_'])))
