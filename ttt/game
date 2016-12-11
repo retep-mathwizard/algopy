@@ -2,7 +2,7 @@
 import random
 from time import sleep
 import minimax as mm
-
+import gamestate as gs
 def take_turn(game):
     while True:
         p_move = int(input('Your move (1-9) > ')) - 1
@@ -44,6 +44,6 @@ else:
 player_goes_first = bool(random.randint(0,2))
     
 input('You go first:' + str(player_goes_first) + '\nenter to continue\n')
-game = mm.GameState(start_board,char=ai_char, oppchar=human_char)
+game = gs.GameState(start_board,char=ai_char, oppchar=human_char)
 run_game(game, player_goes_first)
 
