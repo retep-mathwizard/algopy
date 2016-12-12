@@ -30,6 +30,7 @@ def run_game(game, player_goes_first):
             p_move = take_turn(game)
             game = game.get_next_state(p_move, False)
             if game.is_gameover(): break
+    game.pretty_print()
     print('The computer ' + game.return_state(score))
 
 start_board = ['_'] * 9
