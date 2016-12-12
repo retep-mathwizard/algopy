@@ -16,35 +16,41 @@ def run_game(game, player_goes_first):
         while True:
             game.pretty_print()
             p_move = take_turn(game)
-            game = game.get_next_state(p_move, False)
-            if game.is_gameover(): break
+            game = game.get_next_state(p_move, True)
+            if game.get_score() is not None: break
             ai_move, score = mm.minimax(game)
             game = game.get_next_state(ai_move, True)
-            if game.is_gameover(): break
+            if game.get_score() is not None: break
     else:
         while True:
             ai_move, score = mm.minimax(game)
             game = game.get_next_state(ai_move, True)
-            if game.is_gameover(): break
+            if game.get_score() is not None: break
             game.pretty_print()
             p_move = take_turn(game)
             game = game.get_next_state(p_move, False)
-            if game.is_gameover(): break
+            if game.get_score() is not None: break
     game.pretty_print()
     print('The computer ' + game.return_state(score))
 
-start_board = ['_'] * 9
-'''Interpreting and printing start board'''
-human_char = input('Pick your symbol > ')
-if len(human_char) > 1 or human_char == '' or human_char == ' ' or human_char == '_':
-    exit()
-elif human_char == 'X' or human_char == 'x':
-    ai_char = 'O'
-else:
-    ai_char = 'X'
-player_goes_first = bool(random.randint(0,2))
-    
-input('You go first:' + str(player_goes_first) + '\nenter to continue\n')
-game = gs.GameState(start_board,char=ai_char, oppchar=human_char)
-run_game(game, player_goes_first)
-
+def get_symbols():
+    human_char = input('Pick your symbol > ')
+    if len(human_char) > 1 or human_char == '' or human_char == ' ' or human_char == '_':
+        exit()
+    elif human_char == 'X' or human_char == 'x':
+        ai_char = 'O'
+    else:
+        ai_char = 'X'
+    return human_char, ai_char
+if __name__ == '__main__':
+    try:
+        human_char, ai_char = get_symbols()
+        start_board = ['_'] * 9
+        player_goes_first = bool(random.randint(0,2))
+            
+        input('You go first:{}\nenter to continue\n'.format(player_goes_first))
+        game = gs.GameState(start_board,char=ai_char, oppchar=human_char)
+        run_game(game, player_goes_first)
+    except KeyboardInterrupt:
+        print('\n')
+        exit()

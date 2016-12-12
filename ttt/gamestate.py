@@ -35,7 +35,7 @@ class GameState:
 
     def get_possible_moves(self):
         '''returns all possible squares to place a character'''
-        return [index for index, square in enumerate(self.board) if square != self.char and square != self.oppchar]:
+        return [index for index, square in enumerate(self.board) if square != self.char and square != self.oppchar]
 
     def get_next_state(self, move, our_turn):
         '''returns the gamestate with the move filled in'''
