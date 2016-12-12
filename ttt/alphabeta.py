@@ -1,7 +1,7 @@
-#My mind broke. WIP
+#Using wikipedia pseudocode w/o depth
 def alpha_beta(game_state, alpha, beta):
-    if game_state.is_gameover():
-        return game_state.score()
+    if game_state.get_score() is not None:
+        return 
 
 def max_play(game_state, alpha, beta):
     if game_state.is_gameover():

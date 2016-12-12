@@ -3,13 +3,12 @@
 from operator import itemgetter
 def max_play(game_state):
     '''if the game is over returns score, otherwise calls min_play on it's childen (possible moves from the state) and returns the maximum'''
-    if game_state.get_score() is not None:
-        return game_state.get_score()
+    if game_state.is_gameover(): return game_state.score()
     return max(map(lambda move: min_play(game_state.get_next_state(move, True)), game_state.get_possible_moves()))
 def min_play(game_state):
     '''if the game is over returns score, otherwise calls max_play on it's childen (possible moves from the state) and returns the minimum'''
-    if game_state.get_score() is not None:
-        return game_state.get_score()
+    if game_state.is_gameover(): 
+        return game_state.score()
     return min(map(lambda move: max_play(game_state.get_next_state(move, False)), game_state.get_possible_moves()))
 
 def minimax(game_state):
