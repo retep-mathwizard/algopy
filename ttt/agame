@@ -11,9 +11,6 @@ def get_p_move(game):
                 break
     return p_move
 
-def get_ai_move(game):
-    move_tuple = ab.alphabeta(game, -9999, 9999)
-    return move_tuple[0], move_tuple[1]
 def run_game(game, player_goes_first):
     if player_goes_first:
         while True:
@@ -21,15 +18,13 @@ def run_game(game, player_goes_first):
             p_move = get_p_move(game)
             game = game.get_next_state(p_move, False)
             if game.is_gameover(): break
-            ai_move, score = get_ai_move(game)
-            print(ai_move, score)
+            ai_move, score = ab.alphabeta(game, -9999, 9999)
             game = game.get_next_state(score, True)
             #game = game.get_next_state(ai_move, True)
             if game.is_gameover(): break
     else:
         while True:
-            ai_move, score = get_ai_move(game)
-            print(ai_move, score)
+            ai_move, score = ab.alphabeta(game, -9999, 9999)
             game = game.get_next_state(score, True)
             #game = game.get_next_state(ai_move, True)
             if game.is_gameover(): break

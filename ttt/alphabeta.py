@@ -1,30 +1,29 @@
 #Using wikipedia pseudocode w/o depth
 def alphabeta(game_state, alpha, beta, our_turn=True):
     if game_state.is_gameover():
-        return (None, game_state.score())
+        return game_state.score(), None
     if our_turn:
         score = -9999
         for move in game_state.get_possible_moves():
             child = game_state.get_next_state(move, True)
-            temp_max = alphabeta(child, alpha, beta, False)
-            if temp_max[1] > score:
-                print(score)
-                score = temp_max[1]
-                max_tuple = temp_max
+            temp_max, _ = alphabeta(child, alpha, beta, False)
+            if temp_max > score:
+                score = temp_max
+                best_move = move
             alpha = max(alpha, score)
             if beta <= alpha:
                 break
-        return max_tuple
+        return score, best_move
     else:
         score = 9999
         for move in game_state.get_possible_moves():
             child = game_state.get_next_state(move, False)
-            temp_min = alphabeta(child, alpha, beta, True)
-            if temp_min[1] < score:
-                score = temp_min[1]
-                min_tuple = temp_min
+            temp_min, _ = alphabeta(child, alpha, beta, True)
+            if temp_min < score:
+                score = temp_min
+                best_move = move
             beta = min(beta, score)
             if beta <= alpha:
                 break
-        return min_tuple
+        return score, best_move
     
