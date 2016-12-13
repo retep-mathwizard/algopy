@@ -16,6 +16,7 @@ class GameState:
                 return True       
         return False
     def score(self):
+        '''returns 1, 0, or -1 corresponding to the score (WIN, TIE, LOSS) from the ai's point of view'''
         if self.board.count(self.char) + self.board.count(self.oppchar) == 9:
             return 0
         for combo in self.winning_combos:
@@ -26,6 +27,7 @@ class GameState:
 
     @staticmethod
     def return_state(score):
+        '''Returns a word for each score'''
         if score == 0:
             return('TIED')
         elif score == 1:
@@ -36,7 +38,7 @@ class GameState:
             return('ERROR')
 
     def pretty_print(self):
-        '''prints a list by 3 chars, joined by spaces'''
+        '''prints the board joined by spaces'''
         print(' '.join(self.board[:3]))
         print(' '.join(self.board[3:6]))
         print(' '.join(self.board[6:9]))
