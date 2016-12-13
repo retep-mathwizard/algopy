@@ -1,9 +1,9 @@
-#Using wikipedia pseudocode w/o depth
+#Using wikipedia pseudocode without depth
 def alphabeta(game_state, alpha=-2, beta=2, our_turn=True):
     if game_state.is_gameover():
         return game_state.score(), None
     if our_turn:
-        score = -2
+        score = -2 #worst non-possible score. A win, tie, or even a loss will change this
         for move in game_state.get_possible_moves():
             child = game_state.get_next_state(move, True)
             temp_max, _ = alphabeta(child, alpha, beta, False)
@@ -15,7 +15,7 @@ def alphabeta(game_state, alpha=-2, beta=2, our_turn=True):
                 break
         return score, best_move
     else:
-        score = 2
+        score = 2 #worst non-possible score. A win, tie, or even a loss will change this
         for move in game_state.get_possible_moves():
             child = game_state.get_next_state(move, False)
             temp_min, _ = alphabeta(child, alpha, beta, True)
