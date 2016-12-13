@@ -1,9 +1,9 @@
 #Using wikipedia pseudocode w/o depth
-def alphabeta(game_state, alpha, beta, our_turn=True):
+def alphabeta(game_state, alpha=-2, beta=2, our_turn=True):
     if game_state.is_gameover():
         return game_state.score(), None
     if our_turn:
-        score = -9999
+        score = -2
         for move in game_state.get_possible_moves():
             child = game_state.get_next_state(move, True)
             temp_max, _ = alphabeta(child, alpha, beta, False)
@@ -15,7 +15,7 @@ def alphabeta(game_state, alpha, beta, our_turn=True):
                 break
         return score, best_move
     else:
-        score = 9999
+        score = 2
         for move in game_state.get_possible_moves():
             child = game_state.get_next_state(move, False)
             temp_min, _ = alphabeta(child, alpha, beta, True)
