@@ -13,27 +13,22 @@ def take_turn(game):
 
 def run_game(game, player_goes_first):
     if player_goes_first:
-        game.pretty_print()
         while True:
             game.pretty_print()
             p_move = take_turn(game)
-            game = game.get_next_state(p_move, True)
-            print(game.board, game.get_possible_moves())
+            game = game.get_next_state(p_move, False)
             if game.is_gameover(): break
-            ai_move, score = mm.minimax(game)
+            score, ai_move = mm.minimax(game)
             game = game.get_next_state(ai_move, True)
-            print(game.board, game.get_possible_moves())
             if game.is_gameover(): break
     else:
         while True:
-            ai_move, score = mm.minimax(game)
+            score, ai_move = mm.minimax(game)
             game = game.get_next_state(ai_move, True)
-            print(game.board, game.get_possible_moves())
             if game.is_gameover(): break
             game.pretty_print()
             p_move = take_turn(game)
             game = game.get_next_state(p_move, False)
-            print(game.board, game.get_possible_moves())
             if game.is_gameover(): break
     game.pretty_print()
     print('The computer ' + game.return_state(score))
