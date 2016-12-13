@@ -3,14 +3,16 @@ import random
 from time import sleep
 import tutorialminimax as tm
 import gamestate as gs
+
 def take_turn(game):
     while True:
-        p_move = int(input('Your move (1-9) > ')) - 1
-        if p_move > -1 and p_move < 9:
-            if game.board[p_move] == '_':
-                break
+        raw_move = input('Your move (1-9) > ')
+        if raw_move.isdigit():
+            p_move = int(raw_move) - 1
+            if p_move > -1 and p_move < 9:
+                if game.board[p_move] == '_':
+                    break
     return p_move
-
 def run_game(game, player_goes_first):
     if player_goes_first:
         while True:
