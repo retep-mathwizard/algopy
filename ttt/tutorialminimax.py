@@ -3,7 +3,7 @@ http://codereview.stackexchange.com/questions/149363/minimax-tic-tac-toe-impleme
 '''
 from operator import itemgetter
 
-def minimax(game_state, our_turn):
+def minimax(game_state, our_turn=True):
     '''if the game is over returns (None, score), otherwise recurses to find the best move and returns it and the score.'''
     score = game_state.get_winner()
     if game_state.is_gameover():
@@ -13,7 +13,7 @@ def minimax(game_state, our_turn):
 
 moves = []
 
-def expanded_minimax(game_state, our_turn):
+def expanded_minimax(game_state, our_turn=True):
     global moves
     if game_state.is_gameover():
         return game_state.score()
@@ -21,7 +21,8 @@ def expanded_minimax(game_state, our_turn):
     for move in game_state.get_possible_moves():
         child = game_state.get_next_state(move, our_turn)
         score = expanded_minimax(child, not our_turn)
-        moves.append(move, score)
+        pair = (move, score)
+        moves.append(pair)
         
     if our_turn:
         return max(moves, key=itemgetter(1))
