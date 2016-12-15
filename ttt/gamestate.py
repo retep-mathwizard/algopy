@@ -7,10 +7,10 @@ class GameState:
 
     def is_gameover(self):
         '''returns if a game_state has been won or filled up''' 
-        if self.score_game() is 'NOT OVER':
+        if self.score() is 'NOT OVER':
             return False
         return True
-    def score_game(self):
+    def score(self):
         '''returns 1, 0, or -1 corresponding to the score (WIN, TIE, LOSS) from the ai's point of view'''
 
         for combo in self.winning_combos:
