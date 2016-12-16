@@ -8,9 +8,8 @@ def get_p_move(game):
         raw_move = input('Your move (1-9) > ')
         if raw_move.isdigit():
             p_move = int(raw_move) - 1
-            if p_move > -1 and p_move < 9:
-                if game.board[p_move] == '_':
-                    break
+            if p_move in game.get_possible_moves():
+                break
     return p_move
 
 def run_game(game, player_goes_first):

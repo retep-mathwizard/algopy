@@ -6,8 +6,8 @@ class GameState:
         self.winning_combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 
     def is_gameover(self):
-        '''returns if a game_state has been won or filled up''' 
-        if self.score() is 'NOT OVER':
+        '''returns if a game_state has been won or filled up'''
+        if self.score() is 'NOTOVER':
             return False
         return True
     def score(self):
@@ -15,13 +15,13 @@ class GameState:
 
         for combo in self.winning_combos:
             if self.board[combo[0]] == self.char and self.board[combo[1]] == self.char and self.board[combo[2]] == self.char:
-                return 1   
+                return 1
             elif self.board[combo[0]] == self.oppchar and self.board[combo[1]] == self.oppchar and self.board[combo[2]] == self.oppchar:
                 return -1       
         if self.board.count(self.char) + self.board.count(self.oppchar) == 9:
             return 0
        
-        return 'NOT OVER'
+        return 'NOTOVER'
     @staticmethod
     def return_state(score):
         '''Returns a word for each score'''

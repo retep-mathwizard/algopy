@@ -19,6 +19,7 @@ def run_game(game, player_goes_first):
             game.pretty_print()
             p_move = take_turn(game)
             game = game.get_next_state(p_move, False)
+            print(game.is_gameover())
             if game.is_gameover(): break
             score, ai_move = mm.minimax(game)
             game = game.get_next_state(ai_move, True)
@@ -27,6 +28,7 @@ def run_game(game, player_goes_first):
         while True:
             score, ai_move = mm.minimax(game)
             game = game.get_next_state(ai_move, True)
+            print(game.is_gameover())
             if game.is_gameover(): break
             game.pretty_print()
             p_move = take_turn(game)
