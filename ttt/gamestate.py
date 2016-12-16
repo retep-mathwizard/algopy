@@ -7,7 +7,7 @@ class GameState:
 
     def is_gameover(self):
         '''returns if a game_state has been won or filled up'''
-        if self.score() is 'NOTOVER':
+        if self.score() is 'INCOMPLETE':
             return False
         return True
     def score(self):
@@ -17,11 +17,12 @@ class GameState:
             if self.board[combo[0]] == self.char and self.board[combo[1]] == self.char and self.board[combo[2]] == self.char:
                 return 1
             elif self.board[combo[0]] == self.oppchar and self.board[combo[1]] == self.oppchar and self.board[combo[2]] == self.oppchar:
-                return -1       
+                return -1 
+
         if self.board.count(self.char) + self.board.count(self.oppchar) == 9:
             return 0
        
-        return 'NOTOVER'
+        return 'INCOMPLETE'
     @staticmethod
     def return_state(score):
         '''Returns a word for each score'''
