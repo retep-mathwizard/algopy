@@ -39,7 +39,7 @@ def get_symbols():
     if len(human_char) > 1 or human_char == '' or human_char == ' ' or human_char == '_':
         exit()
     elif human_char == 'X' or human_char == 'x':
-        ai_char = 'O'
+        ai_char = 'X'
     else:
         ai_char = 'X'
     return human_char, ai_char
