@@ -34,9 +34,13 @@ class GameState:
         '''returns 1, 0, or -1 corresponding to the score (WIN, TIE, LOSS) from the ai's point of view'''
 
         for combo in self.winning_combos:
-            if self.board[combo[0][0]][combo[0][1]] == self.char and self.board[combo[1][0]][combo[1][1]] == self.char and self.board[combo[2][0]][combo[2][1]] == self.char and self.board[combo[3][0]][combo[3][1]] == self.char:
+            print(combo[0])
+            if self.board[combo[0][0]][combo[0][1]] == self.char and self.board[combo[1][0]][combo[1][1]] == self.char and \
+                    self.board[combo[2][0]][combo[2][1]] == self.char and self.board[combo[3][0]][combo[3][1]] == self.char:
                 return 1
-            elif self.board[combo[0][0]][combo[0][1]] == self.oppchar and self.board[combo[1][0]][combo[1][1]] == self.oppchar and self.board[combo[2][0]][combo[2][1]] == self.oppchar and self.board[combo[3][0]][combo[3][1]] == self.oppchar:
+            elif self.board[combo[0][0]][combo[0][1]] == self.oppchar and \
+                    self.board[combo[1][0]][combo[1][1]] == self.oppchar and \
+                    self.board[combo[2][0]][combo[2][1]] == self.oppchar and self.board[combo[3][0]][combo[3][1]] == self.oppchar:
                 return -1
         if board.get_possible_moves() == []:
             return 0
@@ -58,7 +62,7 @@ class GameState:
         '''prints the board joined by spaces'''
         for char_num in range(len(self.board[0])): 
             for col in self.board: 
-                print(col[char_num],end=' ') 
+                print(col[char_num],end='|') 
             print()
 
     def get_possible_moves(self):
@@ -68,7 +72,15 @@ class GameState:
     def get_next_state(self, move, our_turn):
         '''returns the gamestate with the move filled in'''
         copy = self.board[:]
-        copy[move][next(index for index, char in enumerate(copy[move][::-1]) if char=' ')] = self.char if our_turn else self.oppchar
+        #print(copy[move])
+        for index, char in list(enumerate(copy[move]))[::-1]:
+            if char == ' ':
+                if our_turn:
+                    copy[move] = self.char
+                else:
+                    copy[move] = self.oppchar
+
+        #copy[move][next(index for index, char in enumerate(copy[move][::-1]) if char==' ')] = self.char if our_turn else self.oppchar
         return GameState(copy, char=self.char, oppchar=self.oppchar)
 
 
