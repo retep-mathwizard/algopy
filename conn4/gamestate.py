@@ -34,15 +34,12 @@ class GameState:
         '''returns 1, 0, or -1 corresponding to the score (WIN, TIE, LOSS) from the ai's point of view'''
 
         for combo in self.winning_combos:
-            print(combo[0])
-            if self.board[combo[0][0]][combo[0][1]] == self.char and self.board[combo[1][0]][combo[1][1]] == self.char and \
-                    self.board[combo[2][0]][combo[2][1]] == self.char and self.board[combo[3][0]][combo[3][1]] == self.char:
+            #broken
+            if self.board[combo[0][0]][combo[0][1]] == self.char and self.board[combo[1][0]][combo[1][1]] == self.char and self.board[combo[2][0]][combo[2][1]] == self.char and self.board[combo[3][0]][combo[3][1]] == self.char:
                 return 1
-            elif self.board[combo[0][0]][combo[0][1]] == self.oppchar and \
-                    self.board[combo[1][0]][combo[1][1]] == self.oppchar and \
-                    self.board[combo[2][0]][combo[2][1]] == self.oppchar and self.board[combo[3][0]][combo[3][1]] == self.oppchar:
+            elif self.board[combo[0][0]][combo[0][1]] == self.oppchar and self.board[combo[1][0]][combo[1][1]] == self.oppchar and self.board[combo[2][0]][combo[2][1]] == self.oppchar and self.board[combo[3][0]][combo[3][1]] == self.oppchar:
                 return -1
-        if board.get_possible_moves() == []:
+        if self.get_possible_moves() == []:
             return 0
        
         return 'INCOMPLETE'
