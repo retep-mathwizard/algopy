@@ -39,7 +39,7 @@ def get_symbols():
     if len(human_char) > 1 or human_char == '' or human_char == ' ' or human_char == '_':
         exit()
     elif human_char == 'X' or human_char == 'x':
-        ai_char = 'X'
+        ai_char = 'O'
     else:
         ai_char = 'X'
     return human_char, ai_char
@@ -48,7 +48,6 @@ if __name__ == '__main__':
         human_char, ai_char = get_symbols()
         start_board = [[' '] * 6] * 7
         player_goes_first = bool(random.randint(0,2))
-        print(start_board)
         input('You go first:{}\nenter to continue\n'.format(player_goes_first))
         game = gs.GameState(start_board,char=ai_char, oppchar=human_char)
         run_game(game, player_goes_first)
