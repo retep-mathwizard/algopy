@@ -68,7 +68,6 @@ class GameState:
 
     def get_next_state(self, move, our_turn):
         '''returns the gamestate with the move filled in'''
-        print(self.board)
         copy = self.board[:]
         for index, char in list(enumerate(copy[move]))[::-1]:
             if char == ' ':
