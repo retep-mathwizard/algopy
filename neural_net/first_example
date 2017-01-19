@@ -1,15 +1,1 @@
 #!/usr/bin/env python3
-<<<<<<< HEAD:conn4/conn4-test
-import gamestate as g
-import alphabeta as a
-
-start_board = [[' '] * 6 for x in range(7)]
-game = g.GameState(start_board, 'X', 'O')
-game.pretty_print()
-print('-'*10)
-x = game.get_next_state(0, True)
-x.pretty_print()
-print(x.get_possible_moves())
-x.get_next_state(0, True).pretty_print()
-=======
->>>>>>> 2db572c6a8bf7daba6f044207fd19ddc1f8f3a95:neural_net/first_example
