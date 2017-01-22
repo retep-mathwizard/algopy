@@ -8,4 +8,11 @@ def non_lin(value, deriv_of_sigmoid=False):
         #converts any value between 0 & 1, is our probability
         return 1/(1+np.exp(-value))
 
-input_values = np.arra
+input_x = np.array([[0,0,1],
+                        [0,1,1],
+                        [1,0,1],
+                        [1,1,1]])
+output_y = np.array([[0],[0],[1],[1]] #np.array([[0,0,1,1]]).T is the same thing (transpose)
+np.random.seed(1) #makes sure that the random numbers predictable. Otherwise different numbers appear every random call.
+#layer 0 > synapse > layer 1(hidden)
+                    
