@@ -15,4 +15,5 @@ input_x = np.array([[0,0,1],
 output_y = np.array([[0],[0],[1],[1]] #np.array([[0,0,1,1]]).T is the same thing (transpose)
 np.random.seed(1) #makes sure that the random numbers predictable. Otherwise different numbers appear every random call.
 #layer 0 > synapse > layer 1(hidden)
-                    
+#https://iamtrask.github.io/2015/07/12/basic-python-network/
+syn0 = 2*np.random.random((3,1)) - 1 #the argument (3,1) makes 3 random numbers in 1 nested list https://repl.it/FRyE/
